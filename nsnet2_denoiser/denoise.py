@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 import soundfile as sf
 from pathlib import Path
-from enhance_onnx import NSnet2Enhancer
+from .enhance_onnx import NSnet2Enhancer
 
 """
     Inference script for NSnet2 baseline.

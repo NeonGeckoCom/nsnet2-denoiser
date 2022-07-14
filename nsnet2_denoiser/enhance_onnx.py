@@ -2,9 +2,10 @@ import argparse
 import numpy as np
 import soundfile as sf
 from pathlib import Path
+from os.path import dirname
 import onnxruntime as ort
 
-import featurelib
+from . import featurelib
 import torch
 import scipy
 import scipy.signal
@@ -26,6 +27,7 @@ class NSnet2Enhancer(object):
         self.N_hop = int(self.N_fft * float(cfg["hopfrac"]))
         
         """load onnx model"""
+        modelfile = dirname(__file__)+"/" + modelfile
         self.ort = ort.InferenceSession(modelfile)
         self.dtype = np.float32
         self.win = np.sqrt(scipy.signal.windows.hann(self.N_win, sym=False))
