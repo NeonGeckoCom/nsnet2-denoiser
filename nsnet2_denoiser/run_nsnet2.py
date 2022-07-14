@@ -25,6 +25,9 @@ def main(args):
 
     if args.fs == 48000:
         cfg['nfft'] = 1024
+        args.model = "nsnet2-20ms-48k-baseline.onnx"
+    else:
+        args.model = "nsnet2-20ms-baseline.onnx"
 
     # Create the enhancer
     enhancer = NSnet2Enhancer(modelfile=args.model, cfg=cfg)
@@ -87,10 +90,9 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-m", "--model", type=str, help="Path to ONNX model.", default='nsnet2-20ms-48k-baseline.onnx')
     parser.add_argument("-i", "--input", type=str, help="Path to noisy speech wav file or directory.")
     parser.add_argument("-o", "--output", type=str, help="Optional output directory.", required=False)
-    parser.add_argument("-fs", type=int, help="Sampling rate of the input audio", default=48000)
+    parser.add_argument("-fs", type=int, help="Sampling rate of the input audio", default=48000, choices=[16000, 48000])
     args = parser.parse_args()
 
     main(args)
