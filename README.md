@@ -17,6 +17,10 @@ From the NSNet2-baseline directory, run run_nsnet2.py with the following require
 Use default values for the rest. Run to enhance the clips.
 
 
+## Attribution:
+Pretrained model [NSNet2](https://github.com/microsoft/DNS-Challenge/tree/master/NSNet2-baseline) by [Microsoft](https://github.com/microsoft) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+
 ## Citation:
 The baseline NSNet noise suppression:<br />  
 ```BibTex
