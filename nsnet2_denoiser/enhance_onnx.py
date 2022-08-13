@@ -1,7 +1,7 @@
 import argparse
 import numpy as np
 import soundfile as sf
-from pathlib import Path
+from io import BytesIO
 from os.path import dirname
 import onnxruntime as ort
 
@@ -109,3 +109,12 @@ class NSnet2Enhancer(object):
         sigOut = featurelib.spec2sig(outSpec, self.cfg)
 
         return sigOut
+
+    def pcm_16le(self, data: bytes):
+        bufferIn = BytesIO(data)
+        sigIn, _ = sf.read(bufferIn, samplerate=self.fs, channels=1, subtype="PCM_16", format="RAW")
+        sigOut = self(sigIn, self.fs)
+        bufferOut = BytesIO()
+        sf.write(bufferOut, sigOut, samplerate=self.fs, subtype="PCM_16", format="RAW")
+        audioOut = bufferOut.getvalue()
+        return audioOut
