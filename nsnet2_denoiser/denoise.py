@@ -14,23 +14,10 @@ def main(args):
     inPath = Path(args.input).resolve()
     assert inPath.exists()
 
-    cfg = {
-            'winlen'   : 0.02,
-            'hopfrac'  : 0.5,
-            'fs'       : args.fs,
-            'mingain'  : -80,
-            'feattype' : 'LogPow',
-            'nfft'     : 320
-        }
-
-    if args.fs == 48000:
-        cfg['nfft'] = 1024
-        args.model = "nsnet2-20ms-48k-baseline.onnx"
-    else:
-        args.model = "nsnet2-20ms-baseline.onnx"
+    
 
     # Create the enhancer
-    enhancer = NSnet2Enhancer(modelfile=args.model, cfg=cfg)
+    enhancer = NSnet2Enhancer(fs=args.fs)
 
     # get modelname
     modelname = Path(args.model).stem

@@ -13,18 +13,18 @@ import scipy.signal
 class NSnet2Enhancer(object):
     """NSnet2 enhancer class."""
 
-    def __init__(self, modelfile, cfg=None):
+    def __init__(self, fs = 48000):
         """Instantiate NSnet2 given a trained model path."""
-        self.cfg = cfg
+        self.cfg, modelfile = self._config(fs)
         self.frameShift = float(self.cfg['winlen'])* float(self.cfg["hopfrac"])
         self.fs = int(self.cfg['fs'])
         self.mingain = 10**(self.cfg['mingain']/20)
         self.N_win = int(float(self.cfg['winlen']) * self.fs)
-        if 'nfft' in cfg:
+        if 'nfft' in self.cfg:
             self.N_fft = int(self.cfg['nfft'])
         else:
             self.N_fft = self.N_win
-        self.N_hop = int(self.N_fft * float(cfg["hopfrac"]))
+        self.N_hop = int(self.N_fft * float(self.cfg["hopfrac"]))
         
         """load onnx model"""
         modelfile = dirname(__file__)+"/" + modelfile
@@ -39,6 +39,23 @@ class NSnet2Enhancer(object):
             H = self.win[idx]
             awin[idx] = np.linalg.pinv(H[:,np.newaxis])
         self.awin = torch.from_numpy(awin).float()
+
+    def _config(self, fs):
+        cfg = {
+            'winlen'   : 0.02,
+            'hopfrac'  : 0.5,
+            'fs'       : fs,
+            'mingain'  : -80,
+            'feattype' : 'LogPow',
+            'nfft'     : 320
+        }
+
+        if fs == 48000:
+            cfg['nfft'] = 1024
+            model = "nsnet2-20ms-48k-baseline.onnx"
+        else:
+            model = "nsnet2-20ms-baseline.onnx"
+        return cfg, model
 
     def enhance(self, x):
         """Obtain the estimated filter"""
