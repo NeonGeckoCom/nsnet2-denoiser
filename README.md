@@ -16,6 +16,21 @@ From the NSNet2-baseline directory, run run_nsnet2.py with the following require
 
 Use default values for the rest. Run to enhance the clips.
 
+### Python
+```python
+from nsnet2_denoiser import NSnet2Enhancer
+enhancer = NSnet2Enhancer(fs=48000)
+
+# numpy
+import soundfile as sf
+sigIn, fs = sf.read("audio.wav")
+outSig = enhancer(sigIn, fs)
+
+# pcm_16le
+from pydub import AudioSegment
+audioIn = AudioSegment.from_wav("audio.wav")
+audioOut = enhancer.pcm_16le(audioIn.raw_data)
+```
 
 ## Attribution:
 Pretrained model [NSNet2](https://github.com/microsoft/DNS-Challenge/tree/master/NSNet2-baseline) by [Microsoft](https://github.com/microsoft) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
