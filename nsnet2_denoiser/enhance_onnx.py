@@ -90,7 +90,10 @@ class NSnet2Enhancer(object):
         assert inFs in (16000, 48000), "Inconsistent sampling rate!"
 
         if inFs == 48000:
-            return self.enhance_48khz(sigIn)
+            sigOut = self.enhance_48khz(sigIn)
+            # convert to numpy
+            sigOut = sigOut.numpy()
+            return sigOut
 
         inputSpec = featurelib.calcSpec(sigIn, self.cfg)
         inputFeature = featurelib.calcFeat(inputSpec, self.cfg)
@@ -108,6 +111,9 @@ class NSnet2Enhancer(object):
         # go back to time domain
         sigOut = featurelib.spec2sig(outSpec, self.cfg)
 
+        # convert to numpy
+        sigOut = sigOut.numpy()
+        
         return sigOut
 
     def pcm_16le(self, data: bytes):
