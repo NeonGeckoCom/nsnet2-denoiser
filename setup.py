@@ -1,10 +1,16 @@
 from setuptools import setup, find_packages
 
 
+with open("README.md", "r") as f:
+    long_description = f.read()
+
+
 setup(
     name='nsnet2-denoiser',
     version="0.2.1",
     description='NSNet2 Deep Noise Suppression (DNS) package',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/NeonGeckoCom/nsnet2-denoiser',
     author='Neongecko',
     author_email='developers@neon.ai',
