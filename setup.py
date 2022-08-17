@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='nsnet2-denoiser',
-    version="0.2.0",
+    version="0.2.1",
     description='NSNet2 Deep Noise Suppression (DNS) package',
     url='https://github.com/NeonGeckoCom/nsnet2-denoiser',
     author='Neongecko',
