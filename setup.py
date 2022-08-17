@@ -22,7 +22,7 @@ setup(
     include_package_data=True,
     classifiers=[
         'Intended Audience :: Developers',
-        'Topic :: Audio Processing :: Denoising',
+        'Topic :: Multimedia :: Sound/Audio :: Speech',
 
         'Programming Language :: Python :: 3.6',
     ]
