@@ -14,7 +14,10 @@ def main(args):
     inPath = Path(args.input).resolve()
     assert inPath.exists()
 
-    
+    if args.fs == 48000:
+        args.model = "nsnet2-20ms-48k-baseline.onnx"
+    else:
+        args.model = "nsnet2-20ms-baseline.onnx"
 
     # Create the enhancer
     enhancer = NSnet2Enhancer(fs=args.fs)
